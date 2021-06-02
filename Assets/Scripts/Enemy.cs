@@ -15,8 +15,8 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = 3;
         speed = 3;
-        isDamaged = true;
-
+        isDamaged = false;
+        
     }
     private void Update()
     {
@@ -35,13 +35,15 @@ public class Enemy : MonoBehaviour
             isDamaged = false;
         }
     }
+    //sets death parameters, removes the object from death, plays damage animation
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
         anim.SetBool("isDamaged", true);
         isDamaged = true;
     }
-    
+    //removes damage from health, plays a damaged animation
+
     IEnumerator ResetDamageBool()
     {
         Debug.Log("Playing damage animation");
@@ -49,6 +51,7 @@ public class Enemy : MonoBehaviour
         anim.SetBool("isDamaged", false);
         Debug.Log("Return to running animation");
     }
+    //plays animations then resets the animation boolean
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
@@ -56,4 +59,5 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    //destroys the object when colliding with the player
 }

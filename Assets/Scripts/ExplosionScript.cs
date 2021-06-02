@@ -9,6 +9,7 @@ public class ExplosionScript : MonoBehaviour
     {
         lifeTime = 1f;   
     }
+    //explosion will only last for one second
     private void Update()
     {
         lifeTime -= Time.deltaTime;
@@ -17,6 +18,7 @@ public class ExplosionScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    //destroys explosion after 1 second
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("enemy"))
@@ -29,5 +31,6 @@ public class ExplosionScript : MonoBehaviour
             }
         }
     }
+    //damages the enemy
 }
 

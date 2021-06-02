@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public GameObject deathScreen;
     Scene scene;
     public Text ammoText;
+    
 
     //health for players
     private List<Image> hearts = new List<Image>();
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour
         {
             currentCharge += Time.deltaTime;
         }
+        //begins charging of a shot
         if (Input.GetKeyUp(KeyCode.Space) && timeBetweenShots == 0 && currentCharge >= 3)
         {
             Object.Instantiate(chargeShot, transform.position, transform.rotation);
@@ -79,6 +81,7 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        //fires a charged shot if the fire key is held for long enough
         else if (Input.GetKeyUp(KeyCode.Space) && timeBetweenShots == 0 && currentCharge < maxCharge && ammoCount > 0)
         {
             RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right);
@@ -91,6 +94,7 @@ public class PlayerController : MonoBehaviour
                     enemy.rb.AddForce(Vector3.right * 1);
                 }
             }
+            //fires a standard shot if a charged shot is not created
             anim.SetBool("isFiring", true);
             isFiring = true;
             currentCharge = 0f;
@@ -107,6 +111,7 @@ public class PlayerController : MonoBehaviour
         {
             timeBetweenShots = 0;
         }
+        //prevents the firing delay from reaching negative numbers.
         if(ammoCount <= 0)
         {
             timeToReload -= Time.deltaTime;
@@ -118,6 +123,7 @@ public class PlayerController : MonoBehaviour
                 reloadText.SetActive(false);
             }
         }
+        //reloads the players gun if empty
         if (playerHealth <= 0)
         {
             Death();
@@ -152,6 +158,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isDamaged", true);
             takesDamage = true;
         }
+        //damages the player when the enemy hits them
     }
     public void Death()
     {
