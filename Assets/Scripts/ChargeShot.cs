@@ -5,32 +5,38 @@ using UnityEngine;
 public class ChargeShot : MonoBehaviour
 {
     public float speed;
-    public float damage;
-    public float splashDamage;
     public float lifeTime;
     public Rigidbody2D rb;
+    public GameObject explosion;
+    public Transform chargeShot;
 
     private void Start()
     {
-        lifeTime = 5f;
+        lifeTime = 10f;
         speed = 100f;
     }
     private void FixedUpdate()
     {
         rb.AddForce(Vector2.right * speed);
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "enemy")
+        lifeTime -= Time.deltaTime;
+        if (lifeTime <= 0)
         {
-            DestroyProjectile();
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(5);
+            Destroy(gameObject);
         }
     }
-
-    void DestroyProjectile()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            Explode();
+            //collision.gameObject.GetComponent<Enemy>().TakeDamage(5);
+        }
+    }
+    void Explode()
+    {
+        Object.Instantiate(explosion, new Vector2(chargeShot.position.x, chargeShot.position.y), Quaternion.identity) ;
         Destroy(gameObject);
+        Debug.Log("KABOOM");
     }
 
 }

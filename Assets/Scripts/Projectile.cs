@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "enemy")
+        if (collision.gameObject.CompareTag("enemy"))
         {
             Enemy currentHealth = collision.gameObject.GetComponent<Enemy>();
             if (currentHealth != null)
